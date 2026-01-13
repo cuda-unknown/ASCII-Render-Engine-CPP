@@ -21,10 +21,19 @@ void rendercircle(int width,int height,float radius ){
         cout<<endl;
     }
 }
-int main(){
-    int width=40;
-    int height=20;
-    int radius=8.0;
-    rendercircle(width,height,radius);
+int main() {
+    string shape;
+    cout << "What shape do you want? (circle/square): ";
+    cin >> shape;
+
+    if (shape == "circle") {
+        float r;
+        cout << "Enter radius: ";
+        cin >> r;
+        rendercircle(40, 20, r);
+    } else {
+        cout << "Shape not supported yet!" << endl;
+    }
+
     return 0;
 }
