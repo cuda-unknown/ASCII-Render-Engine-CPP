@@ -22,6 +22,8 @@ void rendercircle(int width,int height,float radius ){
     }
 }
 int main() {
+    int width=40;
+    int height=20;
     string shape;
     cout << "What shape do you want? (circle/square): ";
     cin >> shape;
