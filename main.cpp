@@ -36,9 +36,13 @@ void rendercircle(int size, float radius) {
             float dy = y - centerY;
 
             float distance = sqrt(dx*dx + dy*dy);
+            
+            //hollow logic :
 
-            if(distance < radius) {
+            if(abs(distance - radius) < 0.5) { 
                 screen[y][x] = '#';
+            } else {
+                screen[y][x] = ' ';
             }
         }
     }
