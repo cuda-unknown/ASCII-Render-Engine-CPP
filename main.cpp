@@ -20,7 +20,7 @@ void rotateframe(int size) {
         }
     }
 }
-void rendercircle(int size, float radius) {
+void rendercircle(int size, float radius,bool ishollow) {
     float centerX = size / 2.0;
     float centerY = size / 2.0;
 
@@ -38,14 +38,15 @@ void rendercircle(int size, float radius) {
             float distance = sqrt(dx*dx + dy*dy);
             
             //hollow logic :
-
-            if(abs(distance - radius) < 0.5) { 
-                screen[y][x] = '#';
-            } else {
-                screen[y][x] = ' ';
+            if (ishollow){
+            if(abs(distance - radius) < 0.5)screen[y][x] = '#';
+            else screen[y][x] = ' ';
+            }else {
+                if(distance < radius) screen[y][x] = '#';
+                else screen[y][x] = ' ';
             }
-        }
-    }
+        }   
+    }   
 
     rotateframe(size);
     
@@ -57,16 +58,20 @@ void rendercircle(int size, float radius) {
     }
 }
 int main() {
-    int size=30;
+    int type;
+cout << "Enter 1 for Solid, 2 for Hollow(circle): ";
+cin >> type;
+bool hollowChoice = (type == 2);
+
+ int size=30;
     string shape;
     cout << "What shape do you want? (circle/square): ";
     cin >> shape;
-
     if (shape == "circle") {
         float r;
         cout << "Enter radius: ";
         cin >> r;
-        rendercircle(size, r);
+        rendercircle(30, r, hollowChoice);
     } else {
         cout << "Shape not supported yet!" << endl;
     }
