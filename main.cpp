@@ -1,10 +1,9 @@
 #include<iostream>
 #include<vector>
 #include<cmath>
-using namespace std;
-char screen[40][40]; 
+using namespace std; 
 
-void rotateframe(int size) {
+void rotateframe(char**screen,int size) {
     for(int i = 0; i < size; i++) {
         for(int j = i + 1; j < size; j++) {
             swap(screen[i][j], screen[j][i]);
@@ -20,7 +19,7 @@ void rotateframe(int size) {
         }
     }
 }
-void rendercircle(int size, float radius,bool ishollow) {
+void rendercircle(char**screen,int size, float radius,bool ishollow) {
     float centerX = size / 2.0;
     float centerY = size / 2.0;
 
@@ -40,15 +39,13 @@ void rendercircle(int size, float radius,bool ishollow) {
             //hollow logic :
             if (ishollow){
             if(abs(distance - radius) < 0.5)screen[y][x] = '#';
-            else screen[y][x] = ' ';
             }else {
                 if(distance < radius) screen[y][x] = '#';
-                else screen[y][x] = ' ';
             }
         }   
     }   
 
-    rotateframe(size);
+    rotateframe(screen,size);
     
     for(int i = 0; i < size; i++) {
         for(int j = 0; j < size; j++) {
@@ -58,23 +55,36 @@ void rendercircle(int size, float radius,bool ishollow) {
     }
 }
 int main() {
-    int type;
-cout << "Enter 1 for Solid, 2 for Hollow(circle): ";
-cin >> type;
-bool hollowChoice = (type == 2);
+    int size;
+    cout<<"Enter resolution (size of screen):";
+    cin>>size;
 
- int size=30;
+    char**screen=new char*[size];
+    for(int i=0;i<size;i++){
+        screen[i]=new char[size];
+    }
+
+    int type;
+    cout << "Enter 1 for Solid, 2 for Hollow(circle): ";
+    cin >> type;
+    bool hollowChoice = (type == 2);
+
     string shape;
     cout << "What shape do you want? (circle/square): ";
     cin >> shape;
+
     if (shape == "circle") {
         float r;
         cout << "Enter radius: ";
         cin >> r;
-        rendercircle(30, r, hollowChoice);
+        rendercircle(screen,size, r, hollowChoice);
     } else {
         cout << "Shape not supported yet!" << endl;
     }
+    for(int i=0;i<size;i++){
+        delete[] screen[i];
+    }
+    delete[] screen;
 
     return 0;
 }
