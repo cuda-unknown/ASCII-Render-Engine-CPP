@@ -1,7 +1,20 @@
 #include<iostream>
 #include<vector>
 #include<cmath>
-using namespace std; 
+#include<algorithm>
+using namespace std;
+
+#define SHAPE_CHAR '#'
+#define BLANK_CHAR ' '
+
+inline void printScreen(char** screen, int size) {
+    for(int i = 0; i < size; i++) {
+        for(int j = 0; j < size; j++) {
+            cout << screen[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
 
 void rotateframe(char**screen,int size) {
     for(int i = 0; i < size; i++) {
@@ -103,13 +116,7 @@ int main() {
             cin>>side;
             rendersquare(screen,size,side,hollowChoice);
         }
-
-        for(int i = 0; i < size; i++) {
-        for(int j = 0; j < size; j++) {
-            cout << screen[i][j] << " ";
-        }
-        cout << endl;
-    }
+    printScreen(screen,size);
     for(int i=0;i<size;i++){
         delete[] screen[i];
     }
