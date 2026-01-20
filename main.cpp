@@ -32,13 +32,13 @@ void rotateframe(char**screen,int size) {
         }
     }
 }
-void rendersquare(char** screen, int size, int side, bool ishollow) {
+void rendersquare(char** screen, int size, int side=10, bool ishollow=true) {
     int centerX = size / 2;
     int centerY = size / 2;
     int halfSide = side / 2;
 
     for(int i = 0; i < size; i++) {
-        for(int j = 0; j < size; j++) screen[i][j] = ' ';
+        for(int j = 0; j < size; j++) screen[i][j] = BLANK_CHAR;
     }
 
     for(int y = 0; y < size; y++) {
@@ -50,21 +50,21 @@ void rendersquare(char** screen, int size, int side, bool ishollow) {
                 if (ishollow) {
                     if (x == centerX - halfSide || x == centerX + halfSide || 
                         y == centerY - halfSide || y == centerY + halfSide) {
-                        screen[y][x] = '#';
+                        screen[y][x] = SHAPE_CHAR;
                     }
                 } else {
-                    screen[y][x] = '#';
+                    screen[y][x] = SHAPE_CHAR;
                 }
             }
         }
     }
 }
-void rendercircle(char**screen,int size, float radius,bool ishollow) {
+void rendercircle(char**screen,int size, float radius=5.0,bool ishollow=true) {
     float centerX = size / 2.0;
     float centerY = size / 2.0;
     for(int i = 0; i < size; i++) {
         for(int j = 0; j < size; j++) {
-            screen[i][j] = ' ';
+            screen[i][j] = BLANK_CHAR;
         }
     }
 
@@ -77,9 +77,9 @@ void rendercircle(char**screen,int size, float radius,bool ishollow) {
             
             //hollow logic :
             if (ishollow){
-            if(abs(distance - radius) < 0.5)screen[y][x] = '#';
+            if(abs(distance - radius) < 0.5)screen[y][x] = SHAPE_CHAR;
             }else {
-                if(distance < radius) screen[y][x] = '#';
+                if(distance < radius) screen[y][x] = SHAPE_CHAR;
             }
         }   
     }   
