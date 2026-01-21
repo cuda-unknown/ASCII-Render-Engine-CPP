@@ -96,27 +96,40 @@ int main() {
         screen[i]=new char[size];
     }
 
-    int type;
-    cout << "Enter 1 for Solid, 2 for Hollow: ";
-    cin >> type;
-    bool hollowChoice = (type == 2);
+    while (true) { 
+        int choice;
+        cout << "\n1. Square\n2. Circle\n3. Exit\nEnter Choice: ";
+        cin >> choice;
 
-    string shape;
-    cout << "What shape do you want? (circle/square): ";
-    cin >> shape;
+        if (choice == 3) break; 
 
-    if (shape == "circle") {
-        float r;
-        cout << "Enter radius: ";
-        cin >> r;
-        rendercircle(screen,size, r, hollowChoice);
-    } else if(shape=="square"){
-            int side;
-            cout<<"give side:"<<" ";
-            cin>>side;
-            rendersquare(screen,size,side,hollowChoice);
+        int type;
+        cout << "Enter 1 for Solid, 2 for Hollow: ";
+        cin >> type;
+        bool hollowChoice = (type == 2);
+
+        switch(choice) {
+            case 1: {
+                int side;
+                cout << "Give side: ";
+                cin >> side;
+                rendersquare(screen, size, side, hollowChoice);
+                break;
+            }
+            case 2: {
+                float r;
+                cout << "Enter radius: ";
+                cin >> r;
+                rendercircle(screen, size, r, hollowChoice);
+                break;
+            }
+            default:
+                cout << "Invalid selection! Try again." << endl;
+                continue;
         }
-    printScreen(screen,size);
+        printScreen(screen, size);
+    }
+
     for(int i=0;i<size;i++){
         delete[] screen[i];
     }
