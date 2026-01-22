@@ -2,6 +2,8 @@
 #include<vector>
 #include<cmath>
 #include<algorithm>
+#include <stdlib.h>
+#include"solver.h"
 using namespace std;
 
 #define SHAPE_CHAR '#'
@@ -88,48 +90,65 @@ void rendercircle(char**screen,int size, float radius=5.0,bool ishollow=true) {
 }
 int main() {
     int size;
-    cout<<"Enter resolution (size of screen):";
-    cin>>size;
+    cout << "Enter resolution (size of screen): ";
+    cin >> size;
 
-    char**screen=new char*[size];
-    for(int i=0;i<size;i++){
-        screen[i]=new char[size];
-    }
+    char** screen = new char*[size];
+    for(int i = 0; i < size; i++) screen[i] = new char[size];
 
     while (true) { 
+        system("cls");
+        cout << "=== ZEPHYRUS COMMAND CENTER ===" << endl;
+        cout << "1. Render Square" << endl;
+        cout << "2. Render Circle" << endl;
+        cout << "3. Anagram Checker (LeetCode #242)" << endl;
+        cout << "4. Ransom Note Logic (LeetCode #383)" << endl;
+        cout << "5. Exit" << endl;
+        cout << "===============================" << endl;
+        cout << "Enter Choice: ";
+        
         int choice;
-        cout << "\n1. Square\n2. Circle\n3. Exit\nEnter Choice: ";
         cin >> choice;
-
-        if (choice == 3) break; 
-
-        int type;
-        cout << "Enter 1 for Solid, 2 for Hollow: ";
-        cin >> type;
-        bool hollowChoice = (type == 2);
+        if (choice == 5) break; 
 
         switch(choice) {
-            case 1: {
-                int side;
-                cout << "Give side: ";
-                cin >> side;
-                rendersquare(screen, size, side, hollowChoice);
-                break;
-            }
+            case 1: 
             case 2: {
-                float r;
-                cout << "Enter radius: ";
-                cin >> r;
-                rendercircle(screen, size, r, hollowChoice);
+                int type;
+                cout << "Enter 1 for Solid, 2 for Hollow: "; cin >> type;
+                bool hollow = (type == 2);
+                if(choice == 1) {
+                    int side; cout << "Give side: "; cin >> side;
+                    rendersquare(screen, size, side, hollow);
+                } else {
+                    float r; cout << "Enter radius: "; cin >> r;
+                    rendercircle(screen, size, r, hollow);
+                }
+                printScreen(screen, size);
                 break;
             }
-            default:
-                cout << "Invalid selection! Try again." << endl;
-                continue;
+            case 3: { 
+                string s1, s2;
+                cout << "String 1: "; cin >> s1;
+                cout << "String 2: "; cin >> s2;
+                if(isAnagram(s1, s2)) cout << "\n[SUCCESS] These are Anagrams!" << endl;
+                else cout << "\n[FAILED] Not Anagrams." << endl;
+                break;
+            }
+            case 4: {
+                string note, mag;
+                cout << "Ransom Note: "; cin >> note;
+                cout << "Magazine: "; cin >> mag;
+                if(canConstruct(note, mag)) cout << "\n[SUCCESS] Note can be formed!" << endl;
+                else cout << "\n[FAILED] Not enough letters." << endl;
+                break;
+            }
         }
-        printScreen(screen, size);
-    }
 
+        cout << "\nPress Enter to return to menu...";
+        cin.ignore();
+        cin.get(); 
+    }
     for(int i=0;i<size;i++){
         delete[] screen[i];
     }
